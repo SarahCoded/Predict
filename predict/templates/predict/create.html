@@ -1,0 +1,32 @@
+{% extends "predict/layout.html" %}
+
+{% block body %}
+<h2 class="titular">Create League</h2>
+{% if messages %}
+    {% for message in messages %}
+      <p class="message-alert">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
+{% for prediction in predictions %}
+
+<h2>Come up with a unique name, tap to generate a random key, and then Create League.</h2>
+<h5>A league name must not contain special characters or exceed 30 characters in length.</h5>
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+<form method="POST" action="{% url 'myleagues' %}" name="createleague">
+    {% csrf_token %}
+    <input type="text" title="Special characters not allowed" pattern="[a-zA-Z0-9'\s {30}]+" placeholder="League Name" name="leaguename">
+    <br>
+    <input type="text" readonly required name="randomkey" class="randomkey">
+    <input type="button" class="keygenerator" id="inputbutton" value="Generate Key!">
+    <br>
+    <button type="submit">Create League</button>
+</form>
+{% empty %}
+<h4>You need to make your predictions <a href="{% url 'index' %}" alt="homepage">here</a> before you can create a league!</h4>
+{% endfor %}
+
+{% endblock %}

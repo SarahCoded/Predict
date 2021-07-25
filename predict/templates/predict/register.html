@@ -1,0 +1,35 @@
+{% extends "predict/layout.html" %}
+
+{% block body %}
+
+    <h2 class="titular">Register</h2>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="reg">
+            <input type="text" name="username" placeholder="Username" title="Spaces or special characters not allowed" class="form" required pattern="[A-Za-z0-9_]{1,15}" autofocus>
+        </div>
+        <div class="reg">
+            <input class="form" type="email" name="email" placeholder="Email Address">
+        </div>
+        <div class="reg">
+            <input class="form-control" pattern=".{7,}" title="Seven or more characters" type="password" name="password" placeholder="Password">
+        </div>
+        <div class="reg">
+            <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+        </div>
+        <div class="check">
+            <input id="checkbox" type="checkbox" name="subscribe">
+            <label class="subtext" for="subscribe"> Tick here to email me with monthly prediction updates!</label>
+        </div>
+        <input class="inputbutton" type="submit" value="Register">
+    </form>
+<div class="smallmessage">
+    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+</div>
+<br>
+{% endblock %}

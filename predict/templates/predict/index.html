@@ -1,0 +1,756 @@
+{% extends "predict/layout.html" %}
+{% load static %} 
+{% block body %}
+{% if messages %}
+  {% for message in messages %}
+  <div class="alertjs">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <p class="message-alert">{{ message }}</p>
+    </div>
+  {% endfor %}
+{% endif %}
+{% if user.is_authenticated %}
+{% for prediction in predictions %}
+{% if message %}
+        <div>{{ message }}</div>
+{% endif %}
+
+<h2 class="titular">{{ user }}, you currently have {{ prediction.currentScore }} points</h2>
+
+<div class="flex">
+
+<table>
+    <caption>My Predictions</caption>
+    <tr>
+        <th>Pos.</th>
+        <th>Team</th>
+        <th>Points</th>
+    </tr>
+    <tr class="tablerow">
+        <td>1</td>
+        <td>{{ prediction.first }}</td>
+        <td class="points">{{ pointslog.0 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>2</td>
+        <td>{{ prediction.second }}</td>
+        <td class="points">{{ pointslog.1 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>3</td>
+        <td>{{ prediction.third }}</td>
+        <td class="points">{{ pointslog.2 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>4</td>
+        <td>{{ prediction.fourth }}</td>
+        <td class="points">{{ pointslog.3 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>5</td>
+        <td>{{ prediction.fifth }}</td>
+        <td class="points">{{ pointslog.4 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>6</td>
+        <td>{{ prediction.sixth }}</td>
+        <td class="points">{{ pointslog.5 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>7</td>
+        <td>{{ prediction.seventh }}</td>
+        <td class="points">{{ pointslog.6 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>8</td>
+        <td>{{ prediction.eighth }}</td>
+        <td class="points">{{ pointslog.7 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>9</td>
+        <td>{{ prediction.ninth }}</td>
+        <td class="points">{{ pointslog.8 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>10</td>
+        <td>{{ prediction.tenth }}</td>
+        <td class="points">{{ pointslog.9 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>11</td>
+        <td>{{ prediction.eleventh }}</td>
+        <td class="points">{{ pointslog.10 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>12</td>
+        <td>{{ prediction.twelfth }}</td>
+        <td class="points">{{ pointslog.11 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>13</td>
+        <td>{{ prediction.thirteenth }}</td>
+        <td class="points">{{ pointslog.12 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>14</td>
+        <td>{{ prediction.fourteenth }}</td>
+        <td class="points">{{ pointslog.13 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>15</td>
+        <td>{{ prediction.fifteenth }}</td>
+        <td class="points">{{ pointslog.14 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>16</td>
+        <td>{{ prediction.sixteenth }}</td>
+        <td class="points">{{ pointslog.15 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>17</td>
+        <td>{{ prediction.seventeenth }}</td>
+        <td class="points">{{ pointslog.16 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>18</td>
+        <td>{{ prediction.eighteenth }}</td>
+        <td class="points">{{ pointslog.17 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>19</td>
+        <td>{{ prediction.nineteenth }}</td>
+        <td class="points">{{ pointslog.18 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>20</td>
+        <td>{{ prediction.twentieth }}</td>
+        <td class="points">{{ pointslog.19 }}</td>
+    </tr>
+</table>
+
+{% empty %}
+<h2 class="titular">{{ user }}, Make Your Predictions</h2>
+<div id="demo" class="section questions">
+    <div class="demo">
+      <div>
+<form method="POST" action= "{% url 'index' %}" name="selection" id="selection">
+    {% csrf_token %}
+    <label for="team1">1st</label>
+    <select id="team1" name="team1" required>
+        <option value="" selected disabled>Team 1</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team2">2nd</label>
+    <select class="a" id="team2" name="team2" required>
+        <option value="" selected disabled >Team 2</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+            <br>
+    <label for="team3">3rd</label>
+    <select class="a" id="team3" name="team3" required>
+        <option value="" selected disabled >Team 3</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team4">4th</label>
+    <select class="a" id="team4" name="team4" required>
+        <option value="" selected disabled>Team 4</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team5">5th</label>
+    <select id="team5" name="team5" required>
+        <option value="" selected disabled>Team 5</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team6">6th</label>
+    <select id="team6" name="team6" required>
+        <option value="" selected disabled>Team 6</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+        </select>
+        <p style="display: none;" id="undo">Undo</p>
+        <br>
+    <label for="team7">7th</label>
+    <select id="team7" name="team7" required>
+        <option value="" selected disabled>Team 7</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team8">8th</label>
+    <select id="team8" name="team8" required>
+        <option value="" selected disabled>Team 8</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+        </select>
+        <p style="display: none;" id="undo">Undo</p>
+        <br>
+    <label for="team9">9th</label>
+      <select id="team9" name="team9" required>
+          <option value="" selected disabled>Team 9</option>
+          {% for team in teams %}
+          <option value="{{ team }}">{{ team }}</option>
+          {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team10">10th</label>
+    <select id="team10" name="team10" required>
+        <option value="" selected disabled>Team 10</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team11">11th</label>
+    <select id="team11" name="team11" required>
+        <option value="" selected disabled>Team 11</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team12">12th</label>
+    <select id="team12" name="team12" required>
+        <option value="" selected disabled>Team 12</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team13">13th</label>
+    <select id="team13" name="team13" required>
+        <option value="" selected disabled>Team 13</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team14">14th</label>
+    <select id="team14" name="team14" required>
+        <option value="" selected disabled>Team 14</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team15">15th</label>
+    <select id="team15" name="team15" required>
+        <option value="" selected disabled>Team 15</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team16">16th</label>
+    <select id="team16" name="team16" required>
+        <option value="" selected disabled>Team 16</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team17">17th</label>
+    <select id="team17" name="team17" required>
+        <option value="" selected disabled>Team 17</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team18">18th</label>
+    <select id="team18" name="team18" required>
+        <option value="" selected disabled>Team 18</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team19">19th</label>
+    <select id="team19" name="team19" required>
+        <option value="" selected disabled>Team 19</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <label for="team20">20th</label>
+    <select id="team20" name="team20" required>
+        <option value="" selected disabled>Team 20</option>
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <p style="display: none;" id="undo">Undo</p>
+    <br>
+    <h5>Think carefully... Once submitted, your predictions cannot be changed!</h5>
+   
+      <button id="predictsubmitbutton" type="submit" value="{{ user.username }}" id="predictsubmit">Submit my Predictions</button>
+</form>
+</div>
+</div>
+</div>
+<div class="flex">
+<table>
+    <caption>EPL Standings 2020/21</caption>
+    <tr>
+        <th>Pos.</th>
+        <th>Team</th>
+        <th>Points</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Manchester City</td>
+        <td>86</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Manchester United</td>
+        <td>74</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Liverpool</td>
+        <td>69</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Chelsea</td>
+        <td>67</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Leicester City</td>
+        <td>66</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>West Ham United</td>
+        <td>65</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Tottenham Hotspur</td>
+        <td>62</td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>Arsenal</td>
+        <td>61</td>
+    </tr>
+    <tr>
+        <td>9</td>
+        <td>Leeds United</td>
+        <td>59</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>Everton</td>
+        <td>59</td>
+    </tr>
+    <tr>
+        <td>11</td>
+        <td>Aston Villa</td>
+        <td>55</td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>Newcastle United</td>
+        <td>45</td>
+    </tr>
+    <tr>
+        <td>13</td>
+        <td>Wolverhampton Wanderers</td>
+        <td>45</td>
+    </tr>
+    <tr>
+        <td>14</td>
+        <td>Crystal Palace</td>
+        <td>44</td>
+    </tr>
+    <tr>
+        <td>15</td>
+        <td>Southampton</td>
+        <td>43</td>
+    </tr>
+    <tr>
+        <td>16</td>
+        <td>Brighton & Hove Albion</td>
+        <td>41</td>
+    </tr>
+    <tr>
+        <td>17</td>
+        <td>Burnley</td>
+        <td>39</td>
+    </tr>
+    <tr>
+        <td>18</td>
+        <td>Fulham</td>
+        <td>28</td>
+    </tr>
+    <tr>
+        <td>19</td>
+        <td>West Brom FC</td>
+        <td>26</td>
+    </tr>
+    <tr>
+        <td>20</td>
+        <td>Sheffield United FC</td>
+        <td>23</td>
+    </tr>
+</table>
+<script>
+// Function to remove unique values from select dropdown - thanks to Kender on stackoverflow https://stackoverflow.com/questions/41601682/unique-select-option-values
+$(function() {
+
+$("select").on("change", function() { // select on change event
+
+  var selectedValues = []; // array of all the values selected by any select element
+  $("select > option:selected").each(function() {
+    var val = $(this).val();
+    if (val != "") { // exclude the value if it is ""
+      selectedValues.push(val);
+    }
+  });
+
+  $("select").not($(this)).each(function() { // for each other select element
+    var selectedValue = $(this).val(); // value of the currently selected option for this select element
+    $(this).find("option").each(function() { // for each option
+      if ($(this).val() != selectedValue && selectedValues.indexOf($(this).val()) > -1) { // disable only if not the currently selected option and if it is selected by a select element
+        $(this).prop('disabled', true);
+      } else {
+        $(this).removeAttr('disabled'); // else show the option if it is hidden
+      }
+    });
+  });
+});
+
+});
+document.addEventListener('DOMContentLoaded', () => {
+
+// Allow user to undo selection of their form submission
+let button = document.querySelectorAll("#undo");
+let select = document.querySelectorAll("select");
+
+for (i = 0; i < button.length; i++) (function(i) {
+    // When user fills in a select in form, make the undo button appear
+    select[i].addEventListener('change', function() {
+        if (select[i].value != 0) {
+            button[i].style.display = "inline";
+        }
+    })
+    button[i].addEventListener('click', function() {
+        select[i].selectedIndex = 0;
+        button[i].style.display = "none";
+    // Now rerun the jquery to remove unique as it doesn't recognize this onchange event
+        var selectedValues = []; // array of all the values selected by any select element
+        $("select > option:selected").each(function() {
+            var val = $(this).val();
+            if (val != "") { // exclude the value if it is ""
+            selectedValues.push(val);
+            }
+        });
+
+        $("select").not($(this)).each(function() { // for each other select element
+            var selectedValue = $(this).val(); // value of the currently selected option for this select element
+            $(this).find("option").each(function() { // for each option
+            if ($(this).val() != selectedValue && selectedValues.indexOf($(this).val()) > -1) { // disable only if not the currently selected option and if it is selected by a select element
+                $(this).prop('disabled', true);
+            } else {
+                $(this).removeAttr('disabled'); // else show the option if it is hidden
+            }
+        });
+    });
+})
+})(i);
+})
+
+
+</script>
+{% endfor %}
+
+<table>
+    <caption>Current Standings</caption>
+    <tr>
+        <th>Pos.</th>
+        <th>Team</th>
+        <th>Points</th>
+    </tr>
+<tr>
+{% for a in api %}
+<tr>
+    <td>{{ a.data.0.position }}</td>
+    <td>{{ a.data.0.name }}</td>
+    <td>{{ a.data.0.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.1.position }}</td>
+    <td>{{ a.data.1.name }}</td>
+    <td>{{ a.data.1.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.2.position }}</td>
+    <td>{{ a.data.2.name }}</td>
+    <td>{{ a.data.2.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.3.position }}</td>
+    <td>{{ a.data.3.name }}</td>
+    <td>{{ a.data.3.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.4.position }}</td>
+    <td>{{ a.data.4.name }}</td>
+    <td>{{ a.data.4.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.5.position }}</td>
+    <td>{{ a.data.5.name }}</td>
+    <td>{{ a.data.5.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.6.position }}</td>
+    <td>{{ a.data.6.name }}</td>
+    <td>{{ a.data.6.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.7.position }}</td>
+    <td>{{ a.data.7.name }}</td>
+    <td>{{ a.data.7.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.8.position }}</td>
+    <td>{{ a.data.8.name }}</td>
+    <td>{{ a.data.8.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.9.position }}</td>
+    <td>{{ a.data.9.name }}</td>
+    <td>{{ a.data.9.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.10.position }}</td>
+    <td>{{ a.data.10.name }}</td>
+    <td>{{ a.data.10.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.11.position }}</td>
+    <td>{{ a.data.11.name }}</td>
+    <td>{{ a.data.11.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.12.position }}</td>
+    <td>{{ a.data.12.name }}</td>
+    <td>{{ a.data.12.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.13.position }}</td>
+    <td>{{ a.data.13.name }}</td>
+    <td>{{ a.data.13.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.14.position }}</td>
+    <td>{{ a.data.14.name }}</td>
+    <td>{{ a.data.14.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.15.position }}</td>
+    <td>{{ a.data.15.name }}</td>
+    <td>{{ a.data.15.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.16.position }}</td>
+    <td>{{ a.data.16.name }}</td>
+    <td>{{ a.data.16.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.17.position }}</td>
+    <td>{{ a.data.17.name }}</td>
+    <td>{{ a.data.17.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.18.position }}</td>
+    <td>{{ a.data.18.name }}</td>
+    <td>{{ a.data.18.points }}</td>
+</tr>
+<tr>
+    <td>{{ a.data.19.position }}</td>
+    <td>{{ a.data.19.name }}</td>
+    <td>{{ a.data.19.points }}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+{% for prediction in predictions %}
+<h3>Predictions submitted on {{ prediction.timestamp }}</h3>
+{% endfor %}
+{% else %}
+<div class="flexwelcome">
+<h3 class="welcome">Welcome to Predict the League, the website where YOU forecast the outcome of the English Premier League.
+</h3>
+<div class="imagecontainer">
+<figure>
+<img class="mySlides" width=600 src="{% static 'predict/images/dscreenshot1.png' %}">
+<figcaption id="fig"><a href="{% url 'register' %}" class="indexreg">Register</a> and submit your predictions</figcaption>
+</figure>
+<figure>
+<img class="mySlides" width=600 src="{% static 'predict/images/dscreenshot3.png' %}">
+<figcaption id="fig">Watch your points as the season unfolds...</figcaption>
+</figure>
+<figure>
+<img class="mySlides" width=600 src="{% static 'predict/images/dscreenshot2.png' %}">
+<figcaption id="fig">Join leagues to compare predictions with friends</figcaption>
+</figure>
+</div>
+
+<div class="imagecontainermobile">
+    <div id="slider">
+    <figure class="mySlides22">
+        <figcaption id="fig2"><a href="{% url 'register' %}" class="indexreg">Register</a> and submit your predictions</figcaption>
+    <img class="mySlides2" src="{% static 'predict/images/mscreenshot1.png' %}">
+    </figure>
+    <figure class="mySlides22">
+        <figcaption id="fig2">Watch your points as the season unfolds...</figcaption>
+    <img class="mySlides2"  src="{% static 'predict/images/mscreenshot2.png' %}">
+    </figure>
+    <figure class="mySlides22">
+        <figcaption id="fig2">Join a league to compare your predictions with friends</figcaption>
+    <img class="mySlides2" src="{% static 'predict/images/mscreenshot3.png' %}">
+    
+    </figure>
+</div>
+    
+</div>
+<div class="hide">
+<a class="prev" id="previous" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" id="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+</div>
+<div class="homepagebullets">
+    <h4>How does the scoring work?</h4>
+    <p class="faq">Ideally, you want as few points as possible. Every team that you predict incorrectly gives you points depending on how far off from the real position that you are. 
+        For example, if you had Manchester United to finish 3rd and they finish 1st, you get 2 points. This isn't as bad as predicting them to finish 20th, which would earn you 
+        19 negative points! On the other hand, each correctly guessed team will earn you 0 points.</p>
+    <hr>
+    <h4>When do the points update?</h4>
+    <p class="faq">Your points should be updated within a few hours of a match finishing.
+    </p>
+    <hr>
+        <h4>Is it free to sign up?</h4>
+    <p class="faq">Yes, it is free. This website was made as a hobby project using Python.
+        Although I would ask that if you find an issue with this site, to email me at <a href="mailto:predictheleague@gmail.com">predictheleague@gmail.com</a> so that I can try to fix it and become
+        a better programmer :)
+    </p>
+    
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+// Set timed animation for desktop gallery
+let slideIndex = 0;
+
+// Call carousel function
+carousel();
+
+function carousel() {
+// Captions that accompany images
+let cap = document.querySelectorAll('#fig');
+// Images themselves
+let x = document.getElementsByClassName("mySlides");
+
+// Loop over images and hide them all
+for (let i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+    cap[i].style.display = "none";
+    }
+    slideIndex++;
+    // Reset to 1 once images have been shown
+    if (slideIndex > x.length) {slideIndex = 1}
+    x[slideIndex-1].style.display = "inline";
+    cap[slideIndex-1].style.display = "inline";
+    setTimeout(carousel, 5000); // Change image every 5 seconds
+}
+
+// Sliding animation for mobile
+// Declare starting variables
+let slideIndex2 = 1;
+let i;
+let slides2 = document.getElementsByClassName("mySlides22");
+let pre = document.getElementById("previous");
+let next = document.getElementById("next");
+
+// Call main function showSlides, and set initial animation when page loads
+firstAnimation = () => {
+showSlides(slideIndex2);
+slides2[slideIndex2-1].classList.add("slide-in");
+slides2[slideIndex2-1].style.display = "block"; 
+}
+// Set a small 0.5s timeout to allow the whole image to load up
+window.setTimeout(firstAnimation, 500)
+
+// Trigger event to change slide number whenever an arrow is pressed 
+window.plusSlides = (n) => {
+  showSlides(slideIndex2 += n);
+}
+
+showSlides = (n) => {
+    // Adjust the slideIndex depending on which button was pushed
+    if (n > slides2.length) {slideIndex2 = 1}    
+    if (n < 1) {slideIndex2 = slides2.length}
+    for (i = 0; i < slides2.length; i++) {
+        // Remove all the pictures and potential animations
+        slides2[i].style.display = "none";  
+        slides2[i].classList.remove("slide-in", "slide-out");  
+    }
+    // Call a function depending on which arrow is clicked
+    previous.addEventListener('click', slideLeft);
+    next.addEventListener('click', slideRight);
+}
+
+slideLeft = () => {
+    // Add a class list to trigger animation and change display from none to block
+    slides2[slideIndex2-1].classList.add("slide-in");
+    slides2[slideIndex2-1].style.display = "block";
+}
+slideRight = () => {
+    // Add a class list to trigger animation and change display from none to block
+    slides2[slideIndex2-1].classList.add("slide-out");
+    slides2[slideIndex2-1].style.display = "block"; 
+}
+
+})
+</script>
+{% endif %}   
+
+{% endblock %}

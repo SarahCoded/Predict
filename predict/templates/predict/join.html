@@ -1,0 +1,25 @@
+{% extends "predict/layout.html" %}
+
+{% block body %}
+<h2 class="titular">Join League</h2>
+{% for predict in predictions %}
+<h2>Enter the six digit pin that has been shared by a friend to join their league!</h2>
+<h5>Please note, the 6 digit pin only contains lower case letters or numbers.</h5>
+{% if messages %}
+    {% for message in messages %}
+    <div class="alertjs">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <p class="message-alert">{{ message }}</p>
+      </div>
+    {% endfor %}
+  {% endif %}
+<form method="POST" name="join" action="{% url 'join'%}">
+    {% csrf_token %}
+    <input type="text" title="Spaces or special characters not allowed" pattern="[a-zA0-9]{6}"name="key" placeholder="6 Digit Pin">
+    <br>
+    <button type="submit">Join</button>
+</form>
+{% empty %}
+<h4>You have to make your predictions <a href="{% url 'index' %}" alt="homepage">here</a> before you can join a league!</h4>
+{% endfor %}
+{% endblock %}

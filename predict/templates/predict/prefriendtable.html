@@ -1,0 +1,33 @@
+{% extends "predict/layout.html" %}
+
+{% block body %}
+<h2 class="titular">{{ leaguename }}</h2>
+<div class="scroll">
+<table class="friendtable">
+    <tr>
+        <th>Pos.</th>
+        <th>Username</th>
+        <th>Points</th>
+    </tr>
+    
+    {% for participant in participants %}
+    <tr class="rowcount">
+        <td>?</td>
+        <td class="tablelink" ><a class="tablelink" id="tablelinkid" href="user/{{ participant.id }}/{{ participant.username }}">{{ participant.username }}</a></td>
+        <td class="points">?</td>
+    </tr>
+    {% endfor %}
+    
+</table>
+</div>
+<div class="leagues" id="friendtable">
+    {% for i in info %}
+    <h4 class="strike">League Info</h4>
+Join Key: <b>{{ i.key }}</b>
+<br>
+Manager: <b>{{ i.userManager }}</b>
+</div>
+{% endfor %}
+<a class="back" href="javascript:history.back()">Go Back</a>
+<br>
+{% endblock %}

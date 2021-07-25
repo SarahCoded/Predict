@@ -1,0 +1,29 @@
+{% extends "predict/layout.html" %}
+
+{% block body %}
+
+    <h2 class="titular">Login</h2>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="login">
+            <input autofocus class="form" type="text" name="username" placeholder="Username">
+        </div>
+        <div class="login">
+            <input class="form" type="password" name="password" placeholder="Password">
+        </div>
+        <input class="inputbutton" type="submit" value="Login">
+    </form>
+<div class="smallmessage">
+    Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+</div>
+<br>
+<div class="smallmessage">
+    Forgotten your password? <a href="{% url 'password_reset' %}">Reset Password.</a>
+</div>
+<br>
+{% endblock %}

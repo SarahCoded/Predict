@@ -1,0 +1,76 @@
+{% extends "predict/layout.html" %}
+
+{% block body %}
+<h2 class="titular">{{ leaguename }}</h2>
+<div class="scroll">
+<table class="friendtable">
+    <tr>
+        <th>Pos.</th>
+        <th>Username</th>
+        <th>Points</th>
+    </tr>
+    
+    {% for key, value in leagues.items %}
+    <tr class="rowcount">
+        {% if value.0 not in drawlist %}
+        <td>{{ forloop.counter }}</td>
+        {% else %}
+        <td class="drawtime">{{ forloop.counter }}</td>
+        {% endif %}
+        <td class="tablelink" ><a class="tablelink" id="tablelinkid" href="user/{{ value.1 }}/{{ key }}">{{ key }}</a></td>
+        <td class="points">{{ value.0 }}</td>
+    </tr>
+    {% endfor %}
+    
+</table>
+</div>
+<div class="leagues" id="friendtable">
+    {% for i in info %}
+    <h4 class="strike">League Info</h4>
+Join Key: <b>{{ i.key }}</b>
+<br>
+Manager: <b>{{ i.userManager }}</b>
+</div>
+{% endfor %}
+<a class="back" href="javascript:history.back()">Go Back</a>
+<br>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Find out whether any draws exist
+    let draws = document.querySelectorAll('.drawtime');
+    if (draws != null) {
+    let points = document.querySelectorAll('.points');
+    let rowCount = document.querySelectorAll('.rowcount').length;
+    
+    // Obtain the user's position of the draws, and how many points they have
+    let scoreList = []
+    let pointList = []
+    for (let n = 0; n < draws.length; n++) {
+        scoreList.push(draws[n].innerHTML)
+    }
+    for (let m = 0; m < draws.length; m++) {
+        pointList.push(points[m].innerHTML)
+    }
+    
+    // Do a loop to compare the two scores and change innerHTML
+    for (let q = 0; q < draws.length; q++) {
+        // If the positions follow 1, 2 or 6, 7, say, and points are equal
+        if (scoreList[q-1] == (scoreList[q] - 1) && pointList[q-1] == pointList[q]) {
+            // Change the innerHTML to the previous position with an =
+            draws[q].innerHTML = `=${scoreList[q-1]}`;
+            // Now loop to take into consideration 3+ way ties
+            for (let r = 0; r < draws.length; r++) {
+            if (pointList[q-2-r] == pointList[q-1]) {
+                draws[q].innerHTML = `=${scoreList[q-2-r]}`;
+            }
+            }
+        }
+        else {
+            // This is the first iteration of the draw sequence, so physical position is the true position
+            draws[q].innerHTML = `=${scoreList[q]}`
+        }
+    }
+    }
+    })
+</script>
+{% endblock %}

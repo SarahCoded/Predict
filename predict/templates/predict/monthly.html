@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        table {
+          border-collapse: collapse;
+          margin: 10px;
+          background-color: white;
+          font-size: 20px;
+        }
+        td, th {
+          border: 0.5px solid black;
+          padding: 5px;
+        }
+        
+        th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          background-color: #137068;
+          color: white;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+    </style>
+<body>
+{% for prediction in predictions %}
+<h3>Hello {{ name }}, you currently have {{ prediction.currentScore }} points.
+{% if prediction.currentScore < 50 %}
+You're doing great!</h3>
+{% elif prediction.currentScore < 65 %}
+You're doing average.</h3>
+{% else %}
+Hopefully your luck will change!</h3>
+{% endif %}
+Listed below are the teams you predicted perfectly...
+<ul style="list-style: none; padding: 0;">
+{% for c in correct %}
+<li>• {{ c }}</li>
+{% empty %}
+<li>But you do not have any team placements spot on at the moment.</li>
+{% endfor %}
+</ul>
+<br>
+Your worst prediction right now is <b>{{ worst.1 }}</b>, which is costing you <b>{{ worst.0 }}</b> points!
+<h4 style="text-align: center;"><u>My Predictions</u></h4>
+<table width="600" style="border:0.5px solid #333; border-collapse: collapse; text-align: center;" cellspacing="0" cellpadding="4" rules="rows">
+    <tr style="background-color: #0F8041">
+        <th>Pos.</th>
+        <th>Team</th>
+        <th>Points</th>
+    </tr>
+
+    {% if pointslog.0 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">1</td>
+        <td style="border: 0.5px solid black;">{{ prediction.first }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.0 }}</td>
+    </tr>
+    {% elif pointslog.0 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">1</td>
+        <td style="border: 0.5px solid black;">{{ prediction.first }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.0 }}</td>
+    </tr>
+    {% elif pointslog.0 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">1</td>
+        <td style="border: 0.5px solid black;">{{ prediction.first }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.0 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">1</td>
+        <td style="border: 0.5px solid black;">{{ prediction.first }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.0 }}</td>
+    </tr>
+    {% endif %}
+
+    {% if pointslog.1 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">2</td>
+        <td style="border: 0.5px solid black;">{{ prediction.second }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.1 }}</td>
+    </tr>
+    {% elif pointslog.1 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">2</td>
+        <td style="border: 0.5px solid black;">{{ prediction.second }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.1 }}</td>
+    </tr>
+    {% elif pointslog.1 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">2</td>
+        <td style="border: 0.5px solid black;">{{ prediction.second }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.1 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">2</td>
+        <td style="border: 0.5px solid black;">{{ prediction.second }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.1 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.2 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">3</td>
+        <td style="border: 0.5px solid black;">{{ prediction.third }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.2 }}</td>
+    </tr>
+    {% elif pointslog.2 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">3</td>
+        <td style="border: 0.5px solid black;">{{ prediction.third }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.2 }}</td>
+    </tr>
+    {% elif pointslog.2 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">3</td>
+        <td style="border: 0.5px solid black;">{{ prediction.third }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.2 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">3</td>
+        <td style="border: 0.5px solid black;">{{ prediction.third }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.2 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.3 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">4</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fourth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.3 }}</td>
+    </tr>
+    {% elif pointslog.3 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">4</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fourth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.3 }}</td>
+    </tr>
+    {% elif pointslog.3 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">4</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fourth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.3 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">4</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fourth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.3 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.4 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">5</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fifth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.4 }}</td>
+    </tr>
+    {% elif pointslog.4 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">5</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fifth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.4 }}</td>
+    </tr>
+    {% elif pointslog.4 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">5</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fifth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.4 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">5</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fifth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.4 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.5 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">6</td>
+        <td style="border: 0.5px solid black;">{{ prediction.sixth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.5 }}</td>
+    </tr>
+    {% elif pointslog.5 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">6</td>
+        <td style="border: 0.5px solid black;">{{ prediction.sixth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.5 }}</td>
+    </tr>
+    {% elif pointslog.5 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">6</td>
+        <td style="border: 0.5px solid black;">{{ prediction.sixth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.5 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">6</td>
+        <td style="border: 0.5px solid black;">{{ prediction.sixth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.5 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.6 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">7</td>
+        <td style="border: 0.5px solid black;">{{ prediction.seventh }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.6 }}</td>
+    </tr>
+    {% elif pointslog.6 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">7</td>
+        <td style="border: 0.5px solid black;">{{ prediction.seventh }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.6 }}</td>
+    </tr>
+    {% elif pointslog.6 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">7</td>
+        <td style="border: 0.5px solid black;">{{ prediction.seventh }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.6 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">7</td>
+        <td style="border: 0.5px solid black;">{{ prediction.seventh }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.6 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.7 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">8</td>
+        <td style="border: 0.5px solid black;">{{ prediction.eighth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.7 }}</td>
+    </tr>
+    {% elif pointslog.7 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">8</td>
+        <td style="border: 0.5px solid black;">{{ prediction.eighth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.7 }}</td>
+    </tr>
+    {% elif pointslog.7 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">8</td>
+        <td style="border: 0.5px solid black;">{{ prediction.eighth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.7 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">8</td>
+        <td style="border: 0.5px solid black;">{{ prediction.eighth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.7 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.8 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">9</td>
+        <td style="border: 0.5px solid black;">{{ prediction.ninth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.8 }}</td>
+    </tr>
+    {% elif pointslog.8 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">9</td>
+        <td style="border: 0.5px solid black;">{{ prediction.ninth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.8 }}</td>
+    </tr>
+    {% elif pointslog.8 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">9</td>
+        <td style="border: 0.5px solid black;">{{ prediction.ninth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.8 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">9</td>
+        <td style="border: 0.5px solid black;">{{ prediction.ninth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.8 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.9 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">10</td>
+        <td style="border: 0.5px solid black;">{{ prediction.tenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.9 }}</td>
+    </tr>
+    {% elif pointslog.9 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">10</td>
+        <td style="border: 0.5px solid black;">{{ prediction.tenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.9 }}</td>
+    </tr>
+    {% elif pointslog.9 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">10</td>
+        <td style="border: 0.5px solid black;">{{ prediction.tenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.9 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">10</td>
+        <td style="border: 0.5px solid black;">{{ prediction.tenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.9 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.10 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">11</td>
+        <td style="border: 0.5px solid black;">{{ prediction.eleventh }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.10 }}</td>
+    </tr>
+    {% elif pointslog.10 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">11</td>
+        <td style="border: 0.5px solid black;">{{ prediction.eleventh }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.10 }}</td>
+    </tr>
+    {% elif pointslog.10 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">11</td>
+        <td style="border: 0.5px solid black;">{{ prediction.eleventh }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.10 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">11</td>
+        <td style="border: 0.5px solid black;">{{ prediction.eleventh }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.10 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.11 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">12</td>
+        <td style="border: 0.5px solid black;">{{ prediction.twelfth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.11 }}</td>
+    </tr>
+    {% elif pointslog.11 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">12</td>
+        <td style="border: 0.5px solid black;">{{ prediction.twelfth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.11 }}</td>
+    </tr>
+    {% elif pointslog.11 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">12</td>
+        <td style="border: 0.5px solid black;">{{ prediction.twelfth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.11 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">12</td>
+        <td style="border: 0.5px solid black;">{{ prediction.twelfth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.11 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.12 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">13</td>
+        <td style="border: 0.5px solid black;">{{ prediction.thirteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.12 }}</td>
+    </tr>
+    {% elif pointslog.12 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">13</td>
+        <td style="border: 0.5px solid black;">{{ prediction.thirteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.12 }}</td>
+    </tr>
+    {% elif pointslog.12 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">13</td>
+        <td style="border: 0.5px solid black;">{{ prediction.thirteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.12 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">13</td>
+        <td style="border: 0.5px solid black;">{{ prediction.thirteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.12 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.13 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">14</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fourteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.13 }}</td>
+    </tr>
+    {% elif pointslog.13 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">14</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fourteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.13 }}</td>
+    </tr>
+    {% elif pointslog.13 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">14</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fourteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.13 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">14</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fourteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.13 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.14 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">15</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fifteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.14 }}</td>
+    </tr>
+    {% elif pointslog.14 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">15</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fifteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.14 }}</td>
+    </tr>
+    {% elif pointslog.14 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">15</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fifteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.14 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">15</td>
+        <td style="border: 0.5px solid black;">{{ prediction.fifteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.14 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.15 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">16</td>
+        <td style="border: 0.5px solid black;">{{ prediction.sixteenth }}</td>
+        <td style="border: 0.5px solid black;"class="points">{{ pointslog.15 }}</td>
+    </tr>
+    {% elif pointslog.15 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">16</td>
+        <td style="border: 0.5px solid black;">{{ prediction.sixteenth }}</td>
+        <td style="border: 0.5px solid black;"class="points">{{ pointslog.15 }}</td>
+    </tr>
+    {% elif pointslog.15 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">16</td>
+        <td style="border: 0.5px solid black;">{{ prediction.sixteenth }}</td>
+        <td style="border: 0.5px solid black;"class="points">{{ pointslog.15 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">16</td>
+        <td style="border: 0.5px solid black;">{{ prediction.sixteenth }}</td>
+        <td style="border: 0.5px solid black;"class="points">{{ pointslog.15 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.16 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">17</td>
+        <td style="border: 0.5px solid black;">{{ prediction.seventeenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.16 }}</td>
+    </tr>
+    {% elif pointslog.16 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">17</td>
+        <td style="border: 0.5px solid black;">{{ prediction.seventeenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.16 }}</td>
+    </tr>
+    {% elif pointslog.16 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">17</td>
+        <td style="border: 0.5px solid black;">{{ prediction.seventeenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.16 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">17</td>
+        <td style="border: 0.5px solid black;">{{ prediction.seventeenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.16 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.17 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">18</td>
+        <td style="border: 0.5px solid black;">{{ prediction.eighteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.17 }}</td>
+    </tr>
+    {% elif pointslog.17 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">18</td>
+        <td style="border: 0.5px solid black;">{{ prediction.eighteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.17 }}</td>
+    </tr>
+    {% elif pointslog.17 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">18</td>
+        <td style="border: 0.5px solid black;">{{ prediction.eighteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.17 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">18</td>
+        <td style="border: 0.5px solid black;">{{ prediction.eighteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.17 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.18 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">19</td>
+        <td style="border: 0.5px solid black;">{{ prediction.nineteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.18 }}</td>
+    </tr>
+    {% elif pointslog.18 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">19</td>
+        <td style="border: 0.5px solid black;">{{ prediction.nineteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.18 }}</td>
+    </tr>
+    {% elif pointslog.18 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">19</td>
+        <td style="border: 0.5px solid black;">{{ prediction.nineteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.18 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">19</td>
+        <td style="border: 0.5px solid black;">{{ prediction.nineteenth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.18 }}</td>
+    </tr>
+    {% endif %}
+    
+    {% if pointslog.19 == 0 %}
+    <tr class="tablerow" style="background-color: green; color: white;">
+        <td style="border: 0.5px solid black;">20</td>
+        <td style="border: 0.5px solid black;">{{ prediction.twentieth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.19 }}</td>
+    </tr>
+    {% elif pointslog.19 <= 3 %}
+    <tr class="tablerow" style="background-color: yellow;">
+        <td style="border: 0.5px solid black;">20</td>
+        <td style="border: 0.5px solid black;">{{ prediction.twentieth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.19 }}</td>
+    </tr>
+    {% elif pointslog.19 <= 5 %}
+    <tr class="tablerow" style="background-color: orange;">
+        <td style="border: 0.5px solid black;">20</td>
+        <td style="border: 0.5px solid black;">{{ prediction.twentieth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.19 }}</td>
+    </tr>
+    {% else %}
+    <tr class="tablerow" style="background-color: red;">
+        <td style="border: 0.5px solid black;">20</td>
+        <td style="border: 0.5px solid black;">{{ prediction.twentieth }}</td>
+        <td style="border: 0.5px solid black;" class="points">{{ pointslog.19 }}</td>
+    </tr>
+    {% endif %}
+
+    <tr>
+        <td style="border: 0.5px solid black;"class="hide"></td>
+        <td style="border: 0.5px solid black;"class="total" style="text-align: right;">Points Total</td>
+        <td style="display: block; border: 0.5px solid black;"">{{ prediction.currentScore }}</td>
+    </tr>
+
+    
+</table>
+{% empty %}
+{{ name }}, you haven't done your predictions yet!
+{% endfor %}
+
+{% if leagues %}
+<h5>Here's how you compare to your friends</h5>
+<table width="600" style="border:0.5px solid #333; border-collapse: collapse; text-align: center;" cellspacing="0" cellpadding="4" rules="rows">
+    <tr style="background-color: #0F8041">
+        <th>Pos.</th>
+        <th>Username</th>
+        <th>Points</th>
+    </tr>
+    {% for key, value in leagues %}
+    {% if value.0 == name %}
+    <tr style="background-color: yellow;">
+        {% else %}
+    <tr>
+        {% endif %}
+        <td style="border: 0.5px solid black;">{{ forloop.counter }}</td>
+        <td style="border: 0.5px solid black;">{{ value.0 }}</td>
+        <td style="border: 0.5px solid black;">{{ key }}</td>
+    </tr>
+    {% empty %}
+{% endfor %}
+{% else %}
+You have not joined or created a league with friends.
+{% endif %}
+</table>
+</body>
+</html>

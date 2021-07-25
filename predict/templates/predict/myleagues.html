@@ -1,0 +1,33 @@
+{% extends "predict/layout.html" %}
+
+{% block body %}
+<div class="titular">
+    <h2>My Leagues</h2>
+</div>
+{% if messages %}
+    {% for message in messages %}
+    <div class="alertjs">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      <p class="message-alert">{{ message }}</p>
+    </div>
+      {% endfor %}
+    <br>
+  {% endif %}
+ 
+{% for league in leagueinfo %}
+<div class="leagues" id="leaguesid">
+<form method="GET" name="friendleague" action="{% url 'friendtable' %}">
+    {% csrf_token %}
+<button class="myleaguebutton" name="league" value="{{ league.leagueName }}" type="submit"> {{ league.leagueName }}</button>
+</form>
+<div class="myleaguesinfo">
+Key: {{ league.key }}
+<br>
+Members: {{ league.numbMembers }}
+</div>
+</div>
+<br>
+{% empty %}
+<h3>You have not joined a league yet.</h3>
+{% endfor %}
+{% endblock %}

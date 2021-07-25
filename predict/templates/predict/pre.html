@@ -1,0 +1,118 @@
+{% extends "predict/layout.html" %}
+{% load static %} 
+{% block body %}
+<h2 class="titular">{{ user }}, your predictions have been submitted. Good Luck!</h2>
+{% for prediction in predictions %}
+<table class="pretable">
+    <caption>My Predictions</caption>
+    <tr>
+        <th>Pos.</th>
+        <th>Team</th>
+        <th>Points</th>
+    </tr>
+    <tr class="tablerow">
+        <td>1</td>
+        <td>{{ prediction.first }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>2</td>
+        <td>{{ prediction.second }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>3</td>
+        <td>{{ prediction.third }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>4</td>
+        <td>{{ prediction.fourth }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>5</td>
+        <td>{{ prediction.fifth }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>6</td>
+        <td>{{ prediction.sixth }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>7</td>
+        <td>{{ prediction.seventh }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>8</td>
+        <td>{{ prediction.eighth }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>9</td>
+        <td>{{ prediction.ninth }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>10</td>
+        <td>{{ prediction.tenth }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>11</td>
+        <td>{{ prediction.eleventh }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>12</td>
+        <td>{{ prediction.twelfth }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>13</td>
+        <td>{{ prediction.thirteenth }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>14</td>
+        <td>{{ prediction.fourteenth }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>15</td>
+        <td>{{ prediction.fifteenth }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>16</td>
+        <td>{{ prediction.sixteenth }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>17</td>
+        <td>{{ prediction.seventeenth }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>18</td>
+        <td>{{ prediction.eighteenth }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>19</td>
+        <td>{{ prediction.nineteenth }}</td>
+        <td>?</td>
+    </tr>
+    <tr class="tablerow">
+        <td>20</td>
+        <td>{{ prediction.twentieth }}</td>
+        <td>?</td>
+    </tr>
+</table>
+{% for prediction in predictions %}
+<h3>Predictions submitted on {{ prediction.timestamp }}</h3>
+{% endfor %}
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,342 @@
+{% extends "predict/layout.html" %}
+
+{% block body %}
+<div class="titular">
+<h2>Settings</h2>
+</div>
+{% if messages %}
+  {% for message in messages %}
+  <div class="alertjs">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <p class="message-alert">{{ message }}</p>
+</div>
+  {% endfor %}
+{% endif %}
+
+<div class="settingemailcontainer" style="height: 60px;">
+    <h2 id="cemail">Update Email</h2>
+    <form id="emailform" name="emailform" method="POST" action="{% url 'settings' %}">
+        {% csrf_token %}
+        <div class="reg">
+            <input class="form-control" type="email" name="updateemails" placeholder="New Email Address">
+        </div>
+        <div class="reg">
+            <input class="form-control" type="email" name="confirmation" placeholder="Confirm Email">
+        </div>
+        <input name="cemail" type="submit" class="inputbutton" value="Confirm New Email">
+    </form>
+    </div>
+
+<!-- Declare height variables for animation to be triggered in js-->
+<div class="settingpasswordcontainer" style="height: 60px;">
+<h2 id="cpassword">Change Password</h2>
+<form id="passwordform" name="passwordform" method="POST" action="{% url 'settings' %}">
+    {% csrf_token %}
+    <div class="reg">
+        <input class="form-control" type="password" name="password" pattern=".{7,}" title="Seven or more characters" placeholder="New Password">
+    </div>
+    <div class="reg">
+        <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+    </div>
+    <input name="cpassword" type="submit" class="inputbutton" value="Confirm New Password">
+</form>
+</div>
+
+<div class="emailpreferencescontainer" style="height: 60px;">
+<h2 id="emailpreferences">Email Preferences</h2>
+<form id="emailform" name="emailform" method="POST" action="{% url 'settings' %}">
+    {% csrf_token %}
+{% if submessage %}
+    <div>{{ submessage }}</div>
+    <input name="emailchange" class="inputbutton" type="submit" value="Subscribe">
+{% endif %}
+{% if unsubmessage %}
+    <div>{{ unsubmessage }}</div>
+    <input name="emailchange" class="inputbutton" type="submit" value="Unsubscribe">
+{% endif %}
+</form>
+</div>
+
+<div class="leavecontainer" style="height: 60px">
+<h2 id="leaveleague">Leave a League</h2>
+
+<form method="POST" name="leaveleagueform" id="leaveleagueform" action="{% url 'settings' %}">
+    {% csrf_token %}
+    {% for league in leagues %}
+    <div>
+    {{ league.leagueName }}
+
+<button class="leaveleague" id="inputbutton" name="leave" type="submit" value="{{ league.leagueName }}">Leave</button>
+</div>
+{% empty %}
+<div class="noleaguejoined"> You have not joined anyone's league.</div>
+{% endfor %}
+</form>
+</div>
+
+<div class="managecontainer" style="height: 60px">
+<h2 id="mleague">Manage a League</h2>
+
+    {% for created in createdleagues %}
+    <div class="individualleague" style="height: 60px">
+<h2 id="managename">{{ created.leagueName }}</h2>
+
+
+<form method="POST" action="{% url 'settings' %}" name="manageform">
+    {% csrf_token %}
+    <div class="pincontainer" style="height: 40px;"> 
+    <h4 id="changepin">Change Key</h4>
+    
+    Current Key: {{ created.key }}
+    <br>
+    <input type="text" readonly name="randomkey" class="randomkey">
+    <input type="button" class="keygenerator"  id="inputbutton" value="Generate a New Key!">
+    <br>
+    <button type="submit" name="updatepin" value="{{ created.leagueName }}">Update Key</button>
+</form>    
+    </div>
+
+    <form method="POST" action="{% url 'settings' %}" name="removeplayer">
+        {% csrf_token %}
+    <div class="removecontainer" style="height: 40px;">
+    <h4 id="removeplayer">Remove a Player</h4>
+    
+    <select name="selectremove" required>
+    <option value="" selected disabled>Player</option>
+    {% for player in players %}
+    {% if player.leagueName == created.leagueName %}
+    <option value="{{ player.user }}">{{ player.user }}</option>
+    {% endif %}
+</div>
+    {% endfor %}
+</select>
+    <button type="submit" name="remove" value="{{ created.leagueName }}">Remove</button>
+</form>
+</div>
+
+    <form method="POST" action="{% url 'settings' %}" name="deleteyourleague">
+        {% csrf_token %}
+    <div class="deleteleaguecontainer" style="height: 40px;">
+    <h4 id="deleteleague">Delete League</h4>
+    
+<div>Are you sure you want to delete {{ created.leagueName }}? The league currently has {{ created.numbMembers}} member(s).</div>
+    <button type="submit" name="deletetheleague" value="{{ created.leagueName }}">Yes, delete {{ created.leagueName }}</button>
+    </form>
+    </div>
+</div>
+{% empty %}
+<div class="nomanage">You have not created a league yet.</div>
+{% endfor %}
+</div>
+
+<div class="deleteaccountcontainer" style="height: 60px;">
+<h2 id="deleteaccount">Delete Account</h2>
+<div id="deleteaccountform">
+<form name="deleteaccountform" method="POST" action="{% url 'settings' %}">
+    {% csrf_token %}
+<div class="dmargin">Are you sure you want to delete your account? This will delete your predictions and any leagues that you have created.
+    Your data cannot be recovered.</div>
+<button type="submit" name="deleteaccount" value="{{ user }}">Delete Account</button>
+</form>
+</div>
+</div>
+<br>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+// Reveal password form if user wants to change password
+let cPassword = document.getElementById('cpassword');
+let passwordContainer = document.querySelector('.settingpasswordcontainer');
+
+let cEmail = document.getElementById('cemail');
+let emailChangeContainer = document.querySelector('.settingemailcontainer');
+
+let emailPreferences = document.getElementById('emailpreferences');
+let emailContainer = document.querySelector('.emailpreferencescontainer');
+
+let deleteAccount = document.getElementById('deleteaccount');
+let deleteAccountContainer = document.querySelector('.deleteaccountcontainer');
+
+let leaveLeague = document.getElementById('leaveleague');
+let leaveContainer = document.querySelector('.leavecontainer');
+
+let changePin = document.querySelectorAll('#changepin');
+let changePinContent = document.querySelectorAll('.pincontainer');
+
+cPassword.onclick = () => {
+    if (passwordContainer.style.height == '60px' ) {
+        passwordContainer.style.height = '300px';
+        emailChangeContainer.style.height = '60px';
+        emailContainer.style.height = '60px';
+        deleteAccountContainer.style.height = '60px';
+        manageContainer.style.height = '60px';
+        leaveContainer.style.height = '60px';
+    }
+    else {
+        passwordContainer.style.height = '60px';
+    }
+}
+
+cEmail.onclick = () => {
+    if (emailChangeContainer.style.height == '60px' ) {
+        emailChangeContainer.style.height = '300px';
+        passwordContainer.style.height = '60px';
+        emailContainer.style.height = '60px';
+        deleteAccountContainer.style.height = '60px';
+        manageContainer.style.height = '60px';
+        leaveContainer.style.height = '60px';
+    }
+    else {
+        emailChangeContainer.style.height = '60px';
+    }
+}
+// Reveal email subscription form if user wants to change preference
+emailPreferences.onclick = () =>  {
+    if (emailContainer.style.height == '60px') {
+        emailContainer.style.height = '220px';
+        passwordContainer.style.height = '60px';
+        deleteAccountContainer.style.height = '60px';
+        manageContainer.style.height = '60px';
+        leaveContainer.style.height = '60px';
+        emailChangeContainer.style.height = '60px';
+    }
+    else {
+        emailContainer.style.height = '60px';
+    }
+}
+// Reveal league info if user wants to leave a league
+let noLeagueJoined = document.querySelector('.noleaguejoined');
+leaveLeague.onclick = () =>  {
+    if (leaveContainer.style.height == '60px') {
+        // User has not joined a league, so a normal height can be used
+        if (noLeagueJoined != null) {
+        leaveContainer.style.height = '120px';
+        }
+        else {
+            // Calculate how many leagues user has joined as this will determine size to expand to
+            let joinedLeagues = document.querySelectorAll('.leaveleague');
+            let joinedNumber = joinedLeagues.length;
+            let newHeight = 60 + (joinedNumber * 68);
+            leaveContainer.style.height = `${newHeight}px`;
+        }
+        passwordContainer.style.height = '60px';
+        emailChangeContainer.style.height = '60px';
+        emailContainer.style.height = '60px';
+        deleteAccountContainer.style.height = '60px';
+        manageContainer.style.height = '60px';
+        deleteAccountContainer.style.height = '60px';
+    }
+    else {
+        leaveContainer.style.height = '60px';
+    }
+}
+// Reveal league info if user wants to manage their own leagues
+let mLeague = document.getElementById('mleague');
+let manageContainer = document.querySelector('.managecontainer');
+let noManage = document.querySelector('.nomanage');
+mLeague.onclick = () =>  {
+    if (manageContainer.style.height == '60px') {
+        // User is not managing a league yet
+        if (noManage != null) {
+            manageContainer.style.height = '120px';
+        }
+        else {
+        let mLeagues = document.querySelectorAll('.individualleague');
+        let mNumber = mLeagues.length;
+        let leagueHeight = 60 + (mNumber * 62);
+        manageContainer.style.height = `${leagueHeight}px`;
+        // Reveal info if user wants to manage an individual league
+        let name = document.querySelectorAll('#managename');
+        for (a = 0; a < name.length; a++) (function(a) {
+        name[a].onclick = () => {
+            if (mLeagues[a].style.height == '60px') {
+            console.log(mLeagues[a])
+                let height = 350 + (62 * mNumber);
+                mLeagues[a].style.height = `${height}px`;
+                manageContainer.style.height = `${height}px`;
+            }
+            else {
+                mLeagues[a].style.height = '60px';
+                manageContainer.style.height = `${leagueHeight}px`;
+            }
+        }
+        })(a);
+        passwordContainer.style.height = '60px';
+        emailChangeContainer.style.height = '60px';
+        emailContainer.style.height = '60px';
+        deleteAccountContainer.style.height = '60px';
+        leaveContainer.style.height = '60px';
+    
+    }   
+}
+else {
+        manageContainer.style.height = '60px';
+    }
+}
+// Reveal pin info if user wants to change their league pin
+
+for (i = 0; i < changePin.length; i++) (function(i) {
+    changePin[i].onclick = () => {
+    if (changePinContent[i].style.height == '40px') {
+        changePinContent[i].style.height = '290px';
+        deleteLeagueContent[i].style.height = '40px';
+        removePlayerContent[i].style.height = '40px';
+    }
+    else {
+        changePinContent[i].style.height = '40px';
+        
+    }
+}
+})(i);
+
+// Reveal player info if user wants to remove a player
+let removePlayer = document.querySelectorAll('#removeplayer');
+let removePlayerContent = document.querySelectorAll('.removecontainer');
+
+for (j = 0; j < removePlayer.length; j++) (function(j) {
+    removePlayer[j].onclick = () => {
+    if (removePlayerContent[j].style.height == '40px') {
+        removePlayerContent[j].style.height = '150px';
+        changePinContent[j].style.height = '40px';
+        deleteLeagueContent[j].style.height = '40px';
+    }
+    else {
+        removePlayerContent[j].style.height = '40px';
+    }
+}
+})(j);
+
+// Reveal league if user wants to delete their league
+let deleteLeague = document.querySelectorAll('#deleteleague');
+let deleteLeagueContent = document.querySelectorAll('.deleteleaguecontainer');
+
+for (k = 0; k < deleteLeague.length; k++) (function(k) {
+    deleteLeague[k].onclick = () => {
+    if (deleteLeagueContent[k].style.height == '40px') {
+        deleteLeagueContent[k].style.height = '180px';
+        removePlayerContent[k].style.height = '40px';
+        changePinContent[k].style.height = '40px';
+    }
+    else {
+        deleteLeagueContent[k].style.height = '40px';
+    }
+}
+})(k);
+
+// Reveal delete account info
+deleteAccount.onclick = () => {
+    if (deleteAccountContainer.style.height == '60px') {
+        deleteAccountContainer.style.height = '280px';
+        emailContainer.style.height = '60px';
+        emailChangeContainer.style.height = '60px';
+        passwordContainer.style.height = '60px';
+        leaveContainer.style.height = '60px';
+        manageContainer.style.height = '60px';
+    }
+    else {
+        deleteAccountContainer.style.height = '60px';
+    }
+}
+})
+</script>
+{% endblock %}

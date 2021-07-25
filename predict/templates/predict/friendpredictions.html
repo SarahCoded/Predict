@@ -1,0 +1,125 @@
+{% extends "predict/layout.html" %}
+
+{% block body %}
+<h2 class="titular">{{ name }}'s Predictions</h2>
+{% for prediction in predictions %}
+<div class="centercontainer">
+<table class="pretable">
+    <tr>
+        <th>Pos.</th>
+        <th>Team</th>
+        <th>Points</th>
+    </tr>
+    <tr class="tablerow">
+        <td>1</td>
+        <td>{{ prediction.first }}</td>
+        <td class="points">{{ pointslog.0 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>2</td>
+        <td>{{ prediction.second }}</td>
+        <td class="points">{{ pointslog.1 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>3</td>
+        <td>{{ prediction.third }}</td>
+        <td class="points">{{ pointslog.2 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>4</td>
+        <td>{{ prediction.fourth }}</td>
+        <td class="points">{{ pointslog.3 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>5</td>
+        <td>{{ prediction.fifth }}</td>
+        <td class="points">{{ pointslog.4 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>6</td>
+        <td>{{ prediction.sixth }}</td>
+        <td class="points">{{ pointslog.5 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>7</td>
+        <td>{{ prediction.seventh }}</td>
+        <td class="points">{{ pointslog.6 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>8</td>
+        <td>{{ prediction.eighth }}</td>
+        <td class="points">{{ pointslog.7 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>9</td>
+        <td>{{ prediction.ninth }}</td>
+        <td class="points">{{ pointslog.8 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>10</td>
+        <td>{{ prediction.tenth }}</td>
+        <td class="points">{{ pointslog.9 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>11</td>
+        <td>{{ prediction.eleventh }}</td>
+        <td class="points">{{ pointslog.10 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>12</td>
+        <td>{{ prediction.twelfth }}</td>
+        <td class="points">{{ pointslog.11 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>13</td>
+        <td>{{ prediction.thirteenth }}</td>
+        <td class="points">{{ pointslog.12 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>14</td>
+        <td>{{ prediction.fourteenth }}</td>
+        <td class="points">{{ pointslog.13 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>15</td>
+        <td>{{ prediction.fifteenth }}</td>
+        <td class="points">{{ pointslog.14 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>16</td>
+        <td>{{ prediction.sixteenth }}</td>
+        <td class="points">{{ pointslog.15 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>17</td>
+        <td>{{ prediction.seventeenth }}</td>
+        <td class="points">{{ pointslog.16 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>18</td>
+        <td>{{ prediction.eighteenth }}</td>
+        <td class="points">{{ pointslog.17 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>19</td>
+        <td>{{ prediction.nineteenth }}</td>
+        <td class="points">{{ pointslog.18 }}</td>
+    </tr>
+    <tr class="tablerow">
+        <td>20</td>
+        <td>{{ prediction.twentieth }}</td>
+        <td class="points">{{ pointslog.19 }}</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td class="total">Points Total</td>
+        <td style="display: block;">{{ prediction.currentScore }}</td>
+    </tr>
+</table>
+</div>
+<h4>Predictions submitted on {{ prediction.timestamp }}</h4>
+
+<a class="back" href="javascript:history.back()">Go Back</a>
+<br>
+{% endfor %}
+{% endblock %}
